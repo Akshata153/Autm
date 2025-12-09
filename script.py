@@ -20,15 +20,15 @@ def get_excel_file(folder):
 
 def main():
     # Auto-detect Excel files
-    report_excel = get_excel_file(report_folder)
-    bug_excel = get_excel_file(bug_report_folder)
+    Sreport_excel = get_excel_file(Sreport_folder)
+    Creport_excel = get_excel_file(Creport_folder)
 
-    print(f"Using report file    → {report_excel}")
-    print(f"Using bug report file → {bug_excel}")
+    print(f"Using report file for classwise report    → {Creport_excel}")
+    print(f"Using report file for subject report → {Sreport_excel}")
 
-    # Load bug report Excel
-    bug_df = pd.read_excel(bug_excel)
-    bug_df["studentid"] = bug_df["studentid"].astype(str).str.strip()
+    # Load report Excel
+    ddf = pd.read_excel(bug_excel)
+    ddf["studentid"] = ddf["studentid"].astype(str).str.strip()
 
     # Status lookup dictionary
     status_lookup = dict(zip(bug_df["studentid"], bug_df["Status"]))
