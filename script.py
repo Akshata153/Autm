@@ -4,10 +4,10 @@ import pandas as pd
 # -----------------------------------------
 # CONFIG
 # -----------------------------------------
-report_folder = "report"
-bug_report_folder = "Bug report"
-required_sheets = ["external", "internal", "extended", "reliablity"]
-valid_status = ["DQA Verify", "Done"]
+report_folder = "Creport"
+Subject_folder = "Sreport"
+required_sheets = ["ClassA", "ClassB", "ClassC", "ClassD"]
+valid_status = ["Fail", "Pending"]
 output_file = os.path.join(os.getcwd(), "output.txt")
 # -----------------------------------------
 
@@ -28,10 +28,10 @@ def main():
 
     # Load bug report Excel
     bug_df = pd.read_excel(bug_excel)
-    bug_df["Issue key"] = bug_df["Issue key"].astype(str).str.strip()
+    bug_df["studentid"] = bug_df["studentid"].astype(str).str.strip()
 
     # Status lookup dictionary
-    status_lookup = dict(zip(bug_df["Issue key"], bug_df["Status"]))
+    status_lookup = dict(zip(bug_df["studentid"], bug_df["Status"]))
 
     # Output
     with open(output_file, "w") as out:
@@ -43,24 +43,23 @@ def main():
                 print(f"❌ Sheet '{sheet}' not found. Skipping.")
                 continue
 
-            if "Bug Ticket No." not in df.columns:
-                print(f"❌ Missing 'Bug Ticket No.' column in sheet '{sheet}'. Skipping.")
+            if "Status" not in df.columns:
+                print(f"❌ Missing 'Status' column in sheet '{sheet}'. Skipping.")
                 continue
 
             for _, row in df.iterrows():
-                ticket = row["Bug Ticket No."]
+                Status = row["Status"]
 
                 # Skip NA / empty
-                if pd.isna(ticket):
+                if pd.isna(Status):
                     continue
 
-                ticket = str(ticket).strip()
+                Status = str(Status).strip()
 
-                # Check in bug report
-                if ticket in status_lookup:
+                if Status in status_lookup:
                     status = status_lookup[ticket]
                     if status in valid_status:
-                        out.write(f"{ticket} status is {status} in bug report. Please check in Jira.\n")
+                        out.write(f"{Status} status is {status} in subject report. Please checkwait for results.\n")
 
     print(f"\n✔ Done! Output created at: {output_file}")
 
